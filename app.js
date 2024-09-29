@@ -28,45 +28,15 @@ var signUpBtn = document.getElementById("sign-up")
         name.value =''
         email.value =''
         password.value =''
-        localStorage.clear()
+       
 
         localStorage.setItem("userData",JSON.stringify(users))
 
+        var fetchingData = JSON.parse(localStorage.getItem("userData"));
+         fetchingData.push(userObj)
 
 
-
-
-
-        var loginBtn = document.getElementById("login")
-
-
-        loginBtn.addEventListener("click",function(){
-        
-        
-            var loginEmail = document.getElementById("login-email")
-            var loginPass = document.getElementById("login-password")
-        
-            console.log(loginEmail.value,loginPass.value);
-
-
-
-            var userObject = {
-               
-                email:loginEmail.value,
-                password:loginPass.value
-                }
-                console.log(userObject);
-
-
-
-
-
-    loginEmail.value =''
-    loginPass.value =''
-    
-    
-
-            
+     
         })
 
 
@@ -74,10 +44,76 @@ var signUpBtn = document.getElementById("sign-up")
 
 
 
-        
-    })
+
+         var loginBtn = document.getElementById("login-btn")
+
+
+         loginBtn && loginBtn.addEventListener("click",function(){
+       
+         
+             var loginEmail = document.getElementById("login-email")
+             var loginPass = document.getElementById("login-password")
+ 
+ 
+             console.log(loginEmail.value,loginPass.value);
+
+             var users = JSON.parse(localStorage.getItem("userData"));
+ 
+         
+             
+ 
+       
+     for (var user of users) {
+         if (user.email == loginEmail.value) {
+ 
+             if (user.password == loginPass.value) {
+            
+                Swal.fire({
+                  title:"Welcome!",
+                    text: "You have logged in successfully",
+                    icon: "success"
+                  });
+
+
+ 
+             }
+             else {
+         
+                    Swal.fire({
+                        text: "email is ok but password is wrong",
+                        icon: "error"
+                      });
+ 
+             }
+ 
+         }
+         else {
+           if(loginPass.value == user.password){
+         
+            Swal.fire({
+                text: "password is ok but email is wrong",
+                icon: "error"
+              });
+             
+           }
+ 
+         }
+ 
+     }
+ 
+       
+     loginEmail.value =''
+     loginPass.value =''
+ 
+             
+         })
+
+
+   
 
 
 
      
                      
+
+      
